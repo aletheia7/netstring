@@ -5,7 +5,8 @@ package netstring_test
 
 import (
 	"bytes"
-	"netstring"
+	"github.com/aletheia7/netstring"
+	"io"
 	"strings"
 	"testing"
 	"testing/iotest"
@@ -51,5 +52,18 @@ func TestScanner_with_bad(t *testing.T) {
 	}
 	if answer != result {
 		t.Error("failed answer != result")
+	}
+}
+
+func TestReader(t *testing.T) {
+	var buf bytes.Buffer
+	s1 := "Hello World"
+	n, err := io.Copy(&buf, netstring.Reader(strings.NewReader(netstring.S2ns(s1))))
+	if err != nil {
+		t.Error(err)
+		return
+	}
+	if buf.String() != s1 || len(s1) != buf.Len() {
+		t.Error(len(s1), s1, "!=", n, buf.Len(), buf.String())
 	}
 }
