@@ -2,7 +2,7 @@
 
 ===
 
-[hi](img/net.gif)
+![net](img/net.gif)
 
 ===
 
